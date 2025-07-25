@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html alang='en'>
+<head>
+	<meta charset='UTF-8' />
+	<title> HDR Fix Align Bioinformatics Tool </title>
+</head>
+<body>
+	
+	<!--Subject and Query -->
+	<h1> Sequence Input </h1>
+	<form action='main.cgi' method='post'>
+		<label for='subject_seq'>Enter your subject sequence:</label>
+		<textarea type='text' id='subject_seq' name='subject_seq' required></textarea>
+		
+		<label for='query_seq'>Enter your query sequence:</label>
+		<textarea type='text' id='query_seq' name='query_seq' required></textarea>
+		
+		<!--Scoring-->
+		<label>Scoring (Match/Mismatch Scores):</label>
+		<select  id='scoring' name='scoring'>
+			<option value='1,0' selected>+1,0 (Default)</option>
+			<option value='1,-2'>+1,-2</option>
+			<option value='1,-3'>+1,-3</option>
+			<option value='1,-4'>+1,-4</option>
+			<option value='2,-3'>+2,-4</option>
+			<option value='4,-5'>+4,-5</option>
+			<option value='1,-1'>+1,-1</option>
+		</select>
+
+		<!--Choose 5 or 3 Arm-->
+		<label>5' Arm or 3' Arm?</label>
+		<input type='radio' name='arm' value='5Arm'> 5' Arm
+		<input type='radio' name='arm' value='3Arm'> 3' Arm
+
+		<!--Choose Forward or Reverse-->
+		<label>Forward or Reverse Clone:</label>
+		<input type='radio' name=clone value='forward'> Forward
+		<input type='radio' name=clone value='reverse'> Reverse
+		
+		<input type='submit' value='SUBMIT'>
+
+	</form>
+</body>
+</html>
