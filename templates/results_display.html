@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+	<meta charset="utf-8" />
+	<title>FixAlign - Sequence Alignment</title>
+	<link rel="stylesheet" href="/static/fixalign.css" />
+	<script src="/static/fixalign.js" defer></script>
+</head>
+<body>
+   
+   <!--Preserve Input-->
+   <div class="user-input">
+      <h1>Initial User Input</h1>
+      
+      <p>Raw Subject Sequence: </p>
+      <pre class="seq-display">{{ subject_seq }}</pre>
+
+      <p>Raw Query Sequence: </p>
+      <pre class="seq-display">{{ query_seq }}</pre>
+
+      <p>Scoring(Match/Mismatch Scores): {{ scoring }}</p>
+
+      <p>Arm Type: {{arm_type }}</p>
+
+      <p>Clone Type: {{clone }}</p>
+     
+   </div>
+
+      <!--From pairwise2 alignment in main cgi & visualization-->		
+	
+      <h2>Initial Pairwise2 Alignment Results</h2>
+	
+      <pre class="alignment-display">
+      {% for i in range(blocked_subject|length) %}
+      {{ blocked_subject[i] }}
+      {{ blocked_matched_lines[i] }}
+      {{ blocked_query[i] }}
+      
+      {% endfor %}
+      </pre>
+
+      <p>Pairwise Alignment Score: {{ score }}</p>
+      <p>Identity (Alignment %): {{ align_percent }}%</p>
+      <p>Total Misalignments; {{ total_misalignments }}</p>
+      <p>Pass Status: {{ pass_status }}</p>
+</body>
