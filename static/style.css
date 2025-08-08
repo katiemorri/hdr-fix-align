@@ -1,0 +1,29 @@
+<style>
+.alignment-display {
+  white-space: pre-wrap;
+  font-family: monospace;
+  letter-spacing: 0.5em;
+}
+
+.alignment-display span {
+  display: inline-block;
+  margin-right:0.4em;
+}
+
+  .mismatch {
+    background-color: #ffcccb;
+    color : black;
+    font-weight: 500;
+  }
+
+  input[type="checkbox"] {
+    width: 1ch;
+    height: 1ch;
+    padding: 0;
+    margin; 0;
+    vertical-align: middle;
+    position: relative;
+  }
+
+</style>
+

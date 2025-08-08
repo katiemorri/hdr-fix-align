@@ -2,6 +2,7 @@
 
 #FixAlign - Analyze sequence alignments, manually approve mismatches
 
+import re
 import cgi
 import jinja2
 from Bio import SeqIO
@@ -51,9 +52,55 @@ alignments = aligner.align(subject_seq, query_seq) #perform alignment
 #assign alignment variables
 initial_alignment = alignments[0]
 alignment_string = initial_alignment.format().splitlines()
-aligned_subject = alignment_string[0]
-final_matched_lines = alignment_string[1]
-aligned_query = alignment_string[2]
+
+aligned_subject = ''
+final_matched_lines = ''
+aligned_query = ''
+
+#put togther all lines in this block
+triple_blocks = []
+for i in range(0, len(alignment_string), 4):
+    if i + 2 < len(alignment_string):
+        subject_lines = alignment_string[i]
+        matched_lines = alignment_string[i + 1]
+        query_lines = alignment_string[i + 2]
+        
+#        triple_blocks.append(f"{subject_lines}\n{matched_lines}\n{query_lines}")
+        
+        highlighted_subject = []
+        highlighted_match = []
+        highlighted_query = []
+        checkbox_lines = []
+
+        for sub, mat, que in zip(subject_lines, matched_lines, query_lines):
+            if mat == '|':
+                highlighted_subject.append(f"<span>{sub}</span>")
+                highlighted_match.append(f"<span>{mat}</span>")
+                highlighted_query.append(f"<span>{que}</span>")
+                checkbox_lines.append(' ')
+            elif mat == '.' or mat == '-':
+                highlighted_subject.append(f"<span class='mismatch'>{sub}</span>")
+                highlighted_match.append(f"<span class='mismatch'>{mat}</span>")
+                highlighted_query.append(f"<span class='mismatch'>{que}</span>")
+                checkbox_lines.append("<input type='checkbox'>")
+            else:
+                highlighted_subject.append(sub)
+                highlighted_match.append(mat)
+                highlighted_query.append(que)
+                checkbox_lines.append(' ')
+
+        triple_blocks.append(
+            ''.join(checkbox_lines) + "\n" +
+            ''.join(highlighted_subject) + "\n" +
+            ''.join(highlighted_match) + "\n" +
+            ''.join(highlighted_query)
+        )
+
+        aligned_subject += subject_lines
+        final_matched_lines += matched_lines
+        aligned_query += query_lines
+
+formatted_alignment = "\n\n".join(triple_blocks)
 
 #aligned_subject = initial_alignment.target
 #aligned_query = initial_alignment.query
@@ -65,38 +112,18 @@ subject_end = coordinates[0,-1]
 query_start = coordinates[1,0]
 query_end = coordinates[1,-1]
 
+#raw sequence lengths
+raw_subject_seq_len = len(subject_seq)
+raw_query_seq_len = len(query_seq)
+
 #identify mismatch & gap positions (misalignments)
-valid_count_chars = ['|', '-', '.']
-start_index = 0
-for i, char in enumerate(final_matched_lines):
-    if char in valid_count_chars:
-        start_index = i
-        break
+##match_line_count_chars = ['|', '-', '.']
 
-total_bases = len(final_matched_lines) - start_index
-base_matches = 0
+strip_final_matched_lines = re.sub(r'[^\|\.\-]', '', final_matched_lines)
+
+total_bases = len(strip_final_matched_lines)
+base_matches = final_matched_lines.count('|')
 misaligned_positions = []
-
-#wrap mismatch positions for highlighting (CSS) and checkbox in JS
-highlighted_subject = []
-highlighted_query = []
-
-for i in range(len(final_matched_lines)):
-    subject_base = aligned_subject[i]
-    query_base = aligned_query[i]
-    match_char = final_matched_lines[i]
-
-    #check if not aligned, then save position
-    if match_char == '|':               #match
-        base_matches += 1               #save for calc. percentage
-        #wappend matches without wrap
-        highlighted_subject.append(subject_base)
-        highlighted_query.append(query_base)
-    else:
-        misaligned_positions.append(i)  #mis-match
-        #append mismatch to have the wrap
-        highlighted_subject.append(f"<span class='mismatch'>{subject_base}</span>")
-        highlighted_query.append(f"<span class='mismatch'>{query_base}</span>")
 
 #calc percentage of alignment between subject and query (including gaps)
 if total_bases > 0:
@@ -106,13 +133,6 @@ else:
 
 #total # of misalignments
 total_misalignments = total_bases - base_matches
-
-#create function to block aligned highlighted sub, match lines, and highlighted, aligned seq
-def blocked_lines(seq, block=60):
-    return [''.join(seq[i:i+block]) for i in range(0, len(seq), block)]
-blocked_matched_lines = blocked_lines(final_matched_lines)
-highlighted_subject_lines = blocked_lines(highlighted_subject)
-highlighted_query_lines = blocked_lines(highlighted_query)
 
 #determine pass/fail based on % match thresholds
 pass_status = "Fail"
@@ -141,16 +161,20 @@ print(template.render(
     clone=clone,
     aligned_subject=aligned_subject, #from main cgi
     aligned_query=aligned_query,
+    formatted_alignment=formatted_alignment,
     score=score,
     subject_start=subject_start,
     subject_end=subject_end,
     query_start=query_start,
     query_end=query_end,
+    raw_subject_seq_len=raw_subject_seq_len,
+    raw_query_seq_len=raw_query_seq_len,
     align_percent=align_percent,
     misaligned_positions=misaligned_positions,
     total_misalignments=total_misalignments,
     final_matched_lines=final_matched_lines,
     pass_status=pass_status,
-    highlighted_subject_lines=highlighted_subject_lines,
-    blocked_matched_lines=blocked_matched_lines,
-    highlighted_query_lines=highlighted_query_lines))
+    highlighted_subject=highlighted_subject,
+    highlighted_query=highlighted_query,
+    highlighted_match=highlighted_match,
+    checkbox_lines=checkbox_lines))
