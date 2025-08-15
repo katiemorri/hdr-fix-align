@@ -1,0 +1,52 @@
+﻿Kathryn Morrison                                 kmorri74                                 Summer 2025
+
+
+*UPDATED* PROJECT PROPOSAL: 
+I researched, designed and created homology directed repair plasmids at one of my previous jobs. After inserting 3' Arm and 5' Arm sequences into the plasmids (individually), we would conduct sequence analyses using a DNA sequencer. The output we were given was the visual alignment and the score of both the query (engineered) and the subject (genomic) sequence for whichever Arm we were sequencing (almost always <1000bp). I had to go in and manually analyze each sequence alignment (multiple for each clone), manually adjust scores when needed to account for sequencing machine error, and then input the analysis results into a book. I would have saved hours of work if I had had this bioinformatics tool to help me.
+
+
+This project tool now goes by 'FixAlign'
+
+
+User Input would include:
+Two text boxes for both the Subject and Query Sequence
+Scoring parameters (match score and gap penalty)i
+Arm type selection (5' Arm or 3' Arm)
+Clone type selection ( normal 5' -> 3' or reverse 3' -> 5')
+
+
+Analysis (on the server):
+Use Biopython's PairwiseAligner in Python CGI  script to perform a pairwise alignment on the two given sequences
+
+Output for User would include:
+- Pairwise alignment score
+- Length and start & end coordinates of subject & query sequences
+- Total number of misalignments
+- Pass/fail status based on arm & clone type (5Arm: pass >= 95%;  3Arm, pass >= 98%)
+- Visual alignment of the subject and query (labeled)
+   - User can approve specific misalignments by clicking on them: percent identity and pass fail status will update automatically
+
+Export Data to MYSQL database:
+For each sequence alignment-
+
+Raw input sequences (Subject and Query)
+Scoring parameters input
+Pairwise alignment score
+Percent Identity (alignment score)
+Pass/Fail Status
+
+
+File Layout:
+
+fixalign_proj/
+├── input_form.html
+├── README.txt
+├── cg-bin/
+│   ├── main_fixalign.cgi
+│   ├──export.cgi
+├──static/
+│   ├──style.css
+│   ├──mismatch_approval.js
+├──templates/ 
+│   ├──results_display.html
+│   ├──database_confirmation.html

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="utf-8" />
+  <title>Database Confirmation</title>
+ <link rel="stylesheet" href="/kmorri74/fixalign_proj/static/style.css" />
+</head>
+
+<body>
+<fieldset>
+  <h1>Results Saved!</h1>
+  <div class="sql_data">
+	  <p><span class="results-label">subject_seq =</span> <pre class="seq-display">{{ subject_seq }}</pre>
+	  <p><span class="results-label">query_seq =</span> <pre class="seq-display">{{ query_seq }}</pre>
+	  <p><span class="results-label">pairwise_score =</span> {{ pairwise_score }}</p>
+	  <p><span class="results-label">scoring =</span> {{ scoring }}</p>
+	  <p><span class="results-label">alignment_score =</span> {{ alignment_score }}</p>
+	  <p><span class="results-label">pass_status =</span> {{ pass_status }}</p>
+  </div>
+  <div class="confirmation">{{ confirmation }}</div>
+</fieldset>
+</body>
+</html>

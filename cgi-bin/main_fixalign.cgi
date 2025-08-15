@@ -64,46 +64,38 @@ for i in range(0, len(alignment_string), 4):
         subject_lines = alignment_string[i]
         matched_lines = alignment_string[i + 1]
         query_lines = alignment_string[i + 2]
-        
-#        triple_blocks.append(f"{subject_lines}\n{matched_lines}\n{query_lines}")
+
         
         highlighted_subject = []
         highlighted_match = []
         highlighted_query = []
-        checkbox_lines = []
 
         for sub, mat, que in zip(subject_lines, matched_lines, query_lines):
             if mat == '|':
                 highlighted_subject.append(f"<span>{sub}</span>")
                 highlighted_match.append(f"<span>{mat}</span>")
                 highlighted_query.append(f"<span>{que}</span>")
-                checkbox_lines.append(' ')
             elif mat == '.' or mat == '-':
-                highlighted_subject.append(f"<span class='mismatch'>{sub}</span>")
+                highlighted_subject.append(f"<span>{sub}</span>")
                 highlighted_match.append(f"<span class='mismatch'>{mat}</span>")
-                highlighted_query.append(f"<span class='mismatch'>{que}</span>")
-                checkbox_lines.append("<input type='checkbox'>")
+                highlighted_query.append(f"<span>{que}</span>")
             else:
-                highlighted_subject.append(sub)
-                highlighted_match.append(mat)
-                highlighted_query.append(que)
-                checkbox_lines.append(' ')
+                highlighted_subject.append(f"<span>{sub}</span>")
+                highlighted_match.append(f"<span>{mat}</span>")
+                highlighted_query.append(f"<span>{que}</span>")
 
         triple_blocks.append(
-            ''.join(checkbox_lines) + "\n" +
             ''.join(highlighted_subject) + "\n" +
             ''.join(highlighted_match) + "\n" +
-            ''.join(highlighted_query)
+            ''.join(highlighted_query) + "\n"
         )
 
         aligned_subject += subject_lines
         final_matched_lines += matched_lines
         aligned_query += query_lines
 
-formatted_alignment = "\n\n".join(triple_blocks)
+formatted_alignment = "\n\n".join(triple_blocks).lstrip()
 
-#aligned_subject = initial_alignment.target
-#aligned_query = initial_alignment.query
 score = initial_alignment.score
 
 coordinates = initial_alignment.coordinates
@@ -115,9 +107,6 @@ query_end = coordinates[1,-1]
 #raw sequence lengths
 raw_subject_seq_len = len(subject_seq)
 raw_query_seq_len = len(query_seq)
-
-#identify mismatch & gap positions (misalignments)
-##match_line_count_chars = ['|', '-', '.']
 
 strip_final_matched_lines = re.sub(r'[^\|\.\-]', '', final_matched_lines)
 
@@ -176,5 +165,5 @@ print(template.render(
     pass_status=pass_status,
     highlighted_subject=highlighted_subject,
     highlighted_query=highlighted_query,
-    highlighted_match=highlighted_match,
-    checkbox_lines=checkbox_lines))
+    highlighted_match=highlighted_match))
+ 

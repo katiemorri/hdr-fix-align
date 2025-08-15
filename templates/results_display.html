@@ -4,21 +4,26 @@
 	<meta charset="utf-8" />
 	<title>FixAlign - Sequence Alignment</title>
 	<link rel="stylesheet" href="/kmorri74/fixalign_proj/static/style.css" />
-	<script src="/kmorri74/fixalign_proj/static/fixalign.js" defer></script>
+	<script src="/kmorri74/fixalign_proj/static/mismatch_approval.js" defer></script>
 </head>
 <body>
    
    <!--Preserve Input-->
+   <fieldset>
    <div class="user-input">
       <h1>Initial Input</h1>
       
+      <div class="seq-only">
       <p>Raw Subject Sequence: </p>
       <pre class="seq-display">{{ subject_seq }}</pre>
       <p>Length: {{ raw_subject_seq_len }}</p>	
+      </div>
 
+      <div class="seq-only">
       <p>Raw Query Sequence: </p>
       <pre class="seq-display">{{ query_seq }}</pre>
       <p>Length: {{ raw_query_seq_len }}</p>
+      </div>
 
       <p>Scoring(Match/Mismatch Scores): {{ scoring }}</p>
 
@@ -26,21 +31,35 @@
 
       <p>Clone Type: {{ clone }}</p>
      
+      <span id="arm_type">{{ arm_type }}</span>
+      <span id="clone_type">{{ clone }}</span>
+   </fieldset>
    </div>
 
       <!--From pairwise2 alignment in main cgi & visualization-->		
-	
-      <h2>Initial Pairwise Alignment Results</h2>
-	
-      <pre class="alignment-display">
-      {{ formatted_alignment | safe }}
-      </pre>
+      <fieldset>	
+      <h1>Pairwise Sequence Alignment Results</h1>
+        <pre class="alignment-display">{{ formatted_alignment | safe }}</pre>
+        <p class="misalign_legend">Alignments:   ' | ' = match; ' . ' = mismatch; ' - ' = gap</class></p>
 
+      <div class="seq-only">
       <p>Subject Start: {{ subject_start }} || Subject End: {{ subject_end }}</p>
       <p>Query Start: {{ query_start }} || Query End: {{ query_end }}</p>
+      </div>
       <p>Pairwise Alignment Score: {{ score }}</p>
-      <p>Identity (Alignment %): {{ align_percent }}%</p>
+      <p>Identity (Alignment %): <span id="align_percent_display">{{ align_percent }}%</span></p>
       <p>Total Misalignments: {{ total_misalignments }}</p>
-      <p>Pass Status: {{ pass_status }}</p>
+      <p>Pass Status: <span id="pass_status_display">{{ pass_status }}</span></p>
+      </fieldset>
+      <form id="SavedResultsForm" method="post" action="/kmorri74/fixalign_proj/cgi-bin/export.cgi">
+        <input type="hidden" name="subject_seq" value="{{ subject_seq }}">
+        <input type="hidden" name="query_seq" value="{{ query_seq }}">
+        <input type="hidden" name="scoring" value="{{ scoring }}">
+	<input type="hidden" name="pairwise_score" value="{{ score }}">
+        <input type="hidden" id="alignment_score" name="alignment_score" value="">
+        <input type="hidden" id="pass_status" name="pass_status" value="">
+        <button type="submit">Submit to Database</button>
+      </form>
+
 </body>
 </html>

@@ -1,29 +1,113 @@
-<style>
+  /* input_form */
+  
+.input-form textarea {
+  width: 60ch;
+  min-height: 120px;
+  font-size: 1.1em;
+  resize: vertical;
+}
+
+label, textarea, select {
+  display: block;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+body, input, textarea, select, button {
+  font-family: sans-serif;
+
+input[type="submit"], button[type="submit"] {
+  display: block;
+  width: 50%;
+  margin-bottom: 40px;
+  font-size: 1.3em;
+  padding: 20px 0;
+  background: #0078d7;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+  
+fieldset {
+  border: 2px solid #0078d7;
+  border-radius: 8px;
+  padding: 18px 24px;
+  width: 75%;
+  margin-bottom: 32px;
+  background: #e0f7fa;
+}
+
+
+/* results_display - keep both align display */
+
 .alignment-display {
-  white-space: pre-wrap;
   font-family: monospace;
-  letter-spacing: 0.5em;
+  white-space: pre;
+  letter-spacing: 0.2em;
+  background: white;
+  border-radius: 6px;
+  padding: 16px;
+  width: 110ch;
+  margin-top: 40px;
 }
 
-.alignment-display span {
+.aligment-display span {
   display: inline-block;
-  margin-right:0.4em;
 }
 
-  .mismatch {
-    background-color: #ffcccb;
-    color : black;
-    font-weight: 500;
-  }
+.mismatch {
+  background-color: #ff6666;
+  cursor: pointer;
+  color : black;
+  font-weight: 500;
+}
 
-  input[type="checkbox"] {
-    width: 1ch;
-    height: 1ch;
-    padding: 0;
-    margin; 0;
-    vertical-align: middle;
-    position: relative;
-  }
+.mismatch.approved {
+  background-color: #8bc34a;
+}
 
-</style>
+#arm_type, #clone_type {
+  display: none;
+}
 
+.seq-display {
+  white-space: pre-wrap;
+  word-break: break-all;
+  width: 60ch;
+  background: white;
+  border-radius: 6px;
+  padding: 16px;
+  letter-spacing: 0.2em;
+}
+
+.seq-only {
+  margin-bottom: 50px;
+}
+
+.misalign_legend {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 0.7em;
+  margin-bottom: 50px;
+}
+
+
+/* database_confirm */
+
+.sql_data {
+  margin-top: 32px;
+  background: white;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 32px;
+}
+
+.confirmation {
+  font-style: italic;
+}
+
+.results-label {
+  font-weight: bold;
+  margin-right: 4px;
+}

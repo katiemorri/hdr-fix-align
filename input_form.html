@@ -2,20 +2,24 @@
 <html lang='en'>
 <head>
 	<meta charset='UTF-8' />
-	<h1> FixAlign Bioinformatics Tool </h1>
+	<link rel="stylesheet" href="/kmorri74/fixalign_proj/static/style.css" />
 </head>
 <body>
-	
+	<h1> FixAlign Bioinformatics Tool </h1>
 	<!--Subject and Query -->
+    <fieldset>
 	<h2> Sequence Input </h2>
-	<form action='/kmorri74/fixalign_proj/cgi-bin/main_fixalign.cgi' method='post'>
+	<form class="input=form" action='/kmorri74/fixalign_proj/cgi-bin/main_fixalign.cgi' method='post'>
+	
 		<label for='subject_seq'>Enter your subject sequence:</label>
 		<textarea type='text' id='subject_seq' name='subject_seq' required></textarea>
 		
 		<label for='query_seq'>Enter your query sequence:</label>
 		<textarea type='text' id='query_seq' name='query_seq' required></textarea>
-		
+    </fieldset>
+
 		<!--Scoring-->
+	<fieldset>	
 		<label>Scoring (Match/Mismatch Scores):</label>
 		<select  id='scoring' name='scoring'>
 			<option value='1,0' selected>+1,0 (Default)</option>
@@ -26,17 +30,21 @@
 			<option value='4,-5'>+4,-5</option>
 			<option value='1,-1'>+1,-1</option>
 		</select>
+	</fieldset>
 
 		<!--Choose 5 or 3 Arm-->
+	<fieldset>
 		<label>5' Arm or 3' Arm?</label>
 		<input type='radio' name='arm' value='5Arm' checked> 5' Arm
 		<input type='radio' name='arm' value='3Arm'> 3' Arm
+	</fieldset>
 
 		<!--Choose Forward or Reverse-->
+	<fieldset>
 		<label>Forward or Reverse Clone:</label>
 		<input type='radio' name='clone' value='Forward' checked> Forward (5' → 3')
 		<input type='radio' name='clone' value='Reverse'> Reverse (3' → 5')
-		
+	</fieldset>
 		<input type='submit' value='SUBMIT'>
 
 	</form>
