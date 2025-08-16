@@ -17,7 +17,7 @@ Utilizes:
    * Jinja2 for HTML templates
    * JavaScript for interactive misalignment approval
 
-Alignment and scoring performed using Biopython's pairwise BioAlign.
+Alignment and scoring performed using Biopython's PairwiseAligner.
 
 Results can be exported for later use.
 
@@ -27,10 +27,12 @@ Results can be exported for later use.
    *  Python3
    * MYSQL database
    * Storage space for results data
+   * CSS for browser styling
+   * Biopython; PairwiseAligner
 
 * DETAILED USAGE *
 
-1. If you have not already, configure your MYSQL credentials within export.cgi; then, create a table in your MYSQL database to hold results variables like so:
+1. If you have not already, download MYSQL & configure your MYSQL credentials within export.cgi; then, create a table in your MYSQL database to hold results variables like so:
 
 CREATE TABLE Alignment_Results (
     id INT AUTO_INCREMENT PRIMARY KEY,
