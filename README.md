@@ -1,6 +1,6 @@
 # FIXALIGN
 
-## ABOUT
+## About
 
 Web front-end tool for pairwise sequence alignment visualization, approval, and database storage.
 
