@@ -28,7 +28,7 @@ Results can be exported for later use.
 
 1. If you have not already, download MYSQL & configure your MYSQL credentials within export.cgi; then, create a table in your MYSQL database to hold results variables like so:
 
-CREATE TABLE Alignment_Results (
+```sql CREATE TABLE Alignment_Results (
     id INT AUTO_INCREMENT PRIMARY KEY,
     subject_seq TEXT NOT NULL,
     query_seq TEXT NOT NULL,
@@ -36,7 +36,8 @@ CREATE TABLE Alignment_Results (
     scoring VARCHAR(12),
     alignment_score FLOAT,
     pass_status enum('Pass','Fail')
-); 
+);
+```
 
 2. Open input form in browser and enter you subject & query sequences, as well as your alignment parameters. 
 3. Submit the form for alignment results viewing.
