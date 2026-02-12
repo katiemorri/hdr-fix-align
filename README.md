@@ -41,7 +41,7 @@ Results can be exported for later use.
 
 2. Open input form in browser and enter you subject & query sequences, as well as your alignment parameters. 
 3. Submit the form for alignment results viewing.
-4. Approve misalignments (mismatches or gaps) by clicking on the misalignment highlighted in red. The percent identity (alignment score) and pass/ fail status will also update automatically.
+4. Approve misalignments (mismatches or gaps) by clicking on the misalignment highlighted in red. The percent identity (alignment score) and pass/fail status will also update automatically.
 5. Save results to MYSQL database for downstream usage.
 6. View confirmation and saved data results.
 
